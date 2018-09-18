@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import anil.agrawal.spring.cache.entity.Employee;
 import anil.agrawal.spring.cache.repository.EmployeeRepository;
 
+/**
+ * @author anil.agrawal
+ *
+ */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -58,6 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@CacheEvict(value = "employee", allEntries = true)
 	@CachePut(value = "employeeId", key = "#employee.id")
 	public Employee updateEmployee(Employee requestBody, Employee employee) {
+		requestBody.setId(employee.getId());
 		return save(requestBody);
 	}
 

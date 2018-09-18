@@ -9,6 +9,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author anil.agrawal
+ *
+ */
 @Entity
 @Table(name = "employee")
 public class Employee {
