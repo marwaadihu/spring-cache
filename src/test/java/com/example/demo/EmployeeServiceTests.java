@@ -23,7 +23,7 @@ import anil.agrawal.spring.cache.service.EmployeeService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringCacheApplication.class)
 @TestPropertySource("classpath:application-test.properties")
-public class SpringCacheApplicationServiceTests {
+public class EmployeeServiceTests {
 
 	@Autowired
 	private EmployeeService employeeService;

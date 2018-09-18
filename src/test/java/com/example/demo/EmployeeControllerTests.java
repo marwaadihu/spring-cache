@@ -32,7 +32,7 @@ import net.minidev.json.parser.JSONParser;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringCacheApplication.class)
 @TestPropertySource("classpath:application-test.properties")
-public class SpringCacheApplicationControllerTests {
+public class EmployeeControllerTests {
 
 	private MockMvc mockMvc;
 
