@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import anil.agrawal.spring.cache.entity.Employee;
 import anil.agrawal.spring.cache.repository.EmployeeRepository;
@@ -39,6 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	@CacheEvict(value = "employee", allEntries = true)
 	@CachePut(value = "employeeId", key = "#employee.id")
 	public Employee addEmployee(Employee employee) {
@@ -51,6 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	@Cacheable(value = "employeeId", key = "#employeeId")
 	public Employee getEmployee(Long employeeId) {
 		LOGGER.info(DATABASE_CALL);
@@ -59,6 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	@CacheEvict(value = "employee", allEntries = true)
 	@CachePut(value = "employeeId", key = "#employee.id")
 	public Employee updateEmployee(Employee requestBody, Employee employee) {
@@ -67,6 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	@Cacheable(value = "employee")
 	public List<Employee> listEmployee() {
 		List<Employee> listOfEmployee = new ArrayList<>();
@@ -79,6 +84,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	@Transactional
 	@Caching(evict = { @CacheEvict(value = "employee", allEntries = true),
 			@CacheEvict(value = "employeeId", key = "#employee.id") })
 	public void deleteEmployee(Employee employee) {
