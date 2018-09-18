@@ -1,6 +1,5 @@
 package anil.agrawal.spring.cache.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import anil.agrawal.spring.cache.entity.Employee;
+import anil.agrawal.spring.cache.exception.NoContentException;
 import anil.agrawal.spring.cache.service.EmployeeService;
 
 /**
@@ -62,10 +62,11 @@ public class EmployeeController {
 			@Valid @RequestBody Employee requestBody) {
 		LOGGER.info("updateEmployee method called");
 		Employee employee = employeeService.getEmployee(employeeId);
-		if (employee != null) {
-			return employeeService.updateEmployee(requestBody, employee);
+		if (employee == null) {
+			throw new NoContentException();
 		}
-		return null;
+		return employeeService.updateEmployee(requestBody, employee);
+
 	}
 
 	/**
@@ -78,10 +79,11 @@ public class EmployeeController {
 	public Employee getEmployee(@PathVariable("employeeId") Long employeeId) {
 		LOGGER.info("getEmployee method called");
 		Employee employee = employeeService.getEmployee(employeeId);
-		if (employee != null) {
-			return employee;
+		if (employee == null) {
+			throw new NoContentException();
 		}
-		return null;
+		return employee;
+
 	}
 
 	/**
@@ -94,9 +96,11 @@ public class EmployeeController {
 	public void deleteEmployee(@PathVariable("employeeId") Long employeeId) {
 		LOGGER.info("deleteEmployee method called");
 		Employee employee = employeeService.getEmployee(employeeId);
-		if (employee != null) {
-			employeeService.deleteEmployee(employee);
+		if (employee == null) {
+			throw new NoContentException();
 		}
+		employeeService.deleteEmployee(employee);
+
 	}
 
 	/**
@@ -108,10 +112,11 @@ public class EmployeeController {
 	public List<Employee> listEmployee() {
 		LOGGER.info("listEmployee method called");
 		List<Employee> employees = employeeService.listEmployee();
-		if (employees != null && !employees.isEmpty()) {
-			return employees;
+		if (employees == null || employees.isEmpty()) {
+			throw new NoContentException();
 		}
-		return new ArrayList<>();
+
+		return employees;
 	}
 
 }
