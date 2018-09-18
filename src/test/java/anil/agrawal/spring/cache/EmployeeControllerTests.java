@@ -1,4 +1,4 @@
-package com.example.demo;
+package anil.agrawal.spring.cache;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
