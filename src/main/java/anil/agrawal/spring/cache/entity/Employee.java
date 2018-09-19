@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
-@Table(name = "employee")
+@Table(name = "tbl_employee")
 public class Employee {
 
 	@Id
@@ -52,11 +52,6 @@ public class Employee {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + "]";
 	}
 
 }
