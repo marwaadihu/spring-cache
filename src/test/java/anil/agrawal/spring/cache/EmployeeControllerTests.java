@@ -22,7 +22,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import anil.agrawal.spring.cache.SpringCacheApplication;
+import anil.agrawal.spring.cache.entity.Employee;
+import anil.agrawal.spring.cache.service.EmployeeService;
 import net.minidev.json.parser.JSONParser;
 
 /**
@@ -35,6 +36,9 @@ import net.minidev.json.parser.JSONParser;
 public class EmployeeControllerTests {
 
 	private MockMvc mockMvc;
+
+	@Autowired
+	private EmployeeService employeeService;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -57,27 +61,45 @@ public class EmployeeControllerTests {
 
 	@Test
 	public void updateEmployeeSuccess() throws Exception {
+		Employee addEmployee = addEmployee();
 		String requestBody = readJsonFromFile("/employee/updateEmployee200.json").toString();
-		mockMvc.perform(
-				MockMvcRequestBuilders.put("/employee/10").contentType(MediaType.APPLICATION_JSON).content(requestBody))
-				.andExpect(status().isOk()).andDo(print()).andReturn();
+		mockMvc.perform(MockMvcRequestBuilders.put("/employee/" + addEmployee.getId())
+				.contentType(MediaType.APPLICATION_JSON).content(requestBody)).andExpect(status().isOk()).andDo(print())
+				.andReturn();
 	}
 
 	@Test
 	public void getEmployeeSuccess() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/employee/10")).andExpect(status().isOk()).andDo(print())
+		addEmployee();
+		mockMvc.perform(MockMvcRequestBuilders.get("/employee/1")).andExpect(status().isOk()).andDo(print())
 				.andReturn();
 	}
 
 	@Test
 	public void deleteEmployeeSuccess() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/employee/11")).andExpect(status().isOk()).andDo(print())
-				.andReturn();
+		Employee addEmployee = addEmployee();
+		mockMvc.perform(MockMvcRequestBuilders.delete("/employee/" + addEmployee.getId())).andExpect(status().isOk())
+				.andDo(print()).andReturn();
 	}
 
 	@Test
 	public void listEmployeeSuccess() throws Exception {
+		for (int i = 0; i < 2; i++) {
+			addEmployee();
+		}
 		mockMvc.perform(MockMvcRequestBuilders.get("/employee")).andExpect(status().isOk()).andDo(print()).andReturn();
+	}
+
+	/**
+	 * This method used to addEmployee
+	 * 
+	 * @return
+	 */
+	private Employee addEmployee() {
+		Employee employee = new Employee();
+		employee.setName("test");
+		Employee addEmployee = employeeService.addEmployee(employee);
+		return addEmployee;
 	}
 
 	/**
