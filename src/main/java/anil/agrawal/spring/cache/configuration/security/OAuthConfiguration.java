@@ -27,6 +27,7 @@ public class OAuthConfiguration extends AuthorizationServerConfigurerAdapter {
 		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
 	}
 
+	// here, clientId is fooClientId and secret is admin
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("fooClientId")
